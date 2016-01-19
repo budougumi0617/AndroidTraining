@@ -1,6 +1,7 @@
 package com.budougumi0617.training;
 
 
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -13,15 +14,20 @@ import android.widget.Button;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
+    public Resources res;
+    public TextView textView;
+    public Button button;
+    public Button fragment_button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        res = getResources();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        final TextView textView = (TextView) findViewById(R.id.greet_view);
-        Button button = (Button) findViewById(R.id.button_change_greet);
-        Button fragment_button = (Button) findViewById(R.id.button_manage_fragment);
+        textView = (TextView) findViewById(R.id.greet_view);
+        button = (Button) findViewById(R.id.button_change_greet);
+        fragment_button = (Button) findViewById(R.id.button_manage_fragment);
         setSupportActionBar(toolbar);
 
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
@@ -31,24 +37,8 @@ public class MainActivity extends AppCompatActivity {
                     getSupportFragmentManager().beginTransaction();
             fragmentTransaction.add(R.id.fragment_container, fragment).commit();
         }
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view){
-                int resId = textView.getText().equals(getString(R.string.good_evening))?
-                        R.string.hello_world : R.string.good_evening;
-                textView.setText(resId);
-            }
-        });
-        fragment_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
-                fragment = fragment.getClass() == MyFragment1.class ? new MyFragment2() : new MyFragment1();
-                FragmentTransaction fragmentTransaction =
-                        getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.fragment_container, fragment).commit();
-            }
-        });
+        button.setOnClickListener(getTextChangeClickListener());
+        fragment_button.setOnClickListener(getFragmentChangeClickListener());
     }
 
     @Override
@@ -71,5 +61,37 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+    public View.OnClickListener getTextChangeClickListener(){
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View view){
+                int resId = getTextId(textView.getText().toString());
+                textView.setText(resId);
+            }
+        };
+    }
+
+    public int getTextId(String text){
+        return text.equals(res.getString(R.string.good_evening))?
+                R.string.hello_world : R.string.good_evening;
+    }
+
+    public View.OnClickListener getFragmentChangeClickListener(){
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+                fragment = changeFragment(fragment.getClass());
+                FragmentTransaction fragmentTransaction =
+                        getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.fragment_container, fragment).commit();
+            }
+        };
+    }
+
+    public Fragment changeFragment(Class<? extends Fragment> currentFragmentType){
+        return currentFragmentType == MyFragment2.class ?
+                new MyFragment1() : new MyFragment2();
     }
 }
