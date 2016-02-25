@@ -2,7 +2,7 @@
     <string name="app_name">Simple Application</string>
     <string name="action_settings">Settings</string>
     <string name="button_text">Change words.</string>
-    <string name="string_manage_fragment">change fragment</string>
+    <string name="string_manage_fragment">Change fragment.</string>
 
 <!-- TODO: Remove or change this placeholder text -->
     <string name="my_fragment_pane">My fragment pane</string>
