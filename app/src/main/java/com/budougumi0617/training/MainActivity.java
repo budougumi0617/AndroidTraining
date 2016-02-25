@@ -12,7 +12,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     public Resources res;
@@ -33,8 +32,9 @@ public class MainActivity extends AppCompatActivity {
 
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
         if(fragment == null) {
-            /* [期待結果] 起動時、fragmentが表示される */
             fragment = new MyFragment1();
+            FragmentTransaction fragmentTransaction  =getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.add(R.id.fragment_container, fragment).commit();
         }
         button.setOnClickListener(getTextChangeClickListener());
         fragment_button.setOnClickListener(getFragmentChangeClickListener());
@@ -72,21 +72,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public int getTextId(String text){
-        /* [期待結果] クリックされた時、テキストを入れ替える */
-        Toast.makeText(MainActivity.this,"Let's implement getTextId()", Toast.LENGTH_LONG).show();
-        return R.string.to_do_implement;
+        return text.equals(res.getString(R.string.good_evening))?
+                R.string.hello_world : R.string.good_evening;
     }
 
     public View.OnClickListener getFragmentChangeClickListener(){
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /* [期待結果] クリックされた時、fragmentを入れ替える */
-                Fragment fragment = new MyFragment1();
+                Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+                fragment = changeFragment(fragment.getClass());
                 FragmentTransaction fragmentTransaction =
                         getSupportFragmentManager().beginTransaction();
-                Toast.makeText(MainActivity.this,
-                        "Let's implement getFragmentChangeClickListener()", Toast.LENGTH_LONG).show();
+                fragmentTransaction.replace(R.id.fragment_container, fragment).commit();
             }
         };
     }
