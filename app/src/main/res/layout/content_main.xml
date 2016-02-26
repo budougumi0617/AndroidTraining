@@ -9,8 +9,7 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/activity_main" tools:context=".MainActivity">
 
-    <!-- [期待結果]　起動時 Hello World!と表示される -->
-    <TextView android:text="@string/to_do_implement"
+    <TextView android:text="@string/hello_world"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/greet_view" />
