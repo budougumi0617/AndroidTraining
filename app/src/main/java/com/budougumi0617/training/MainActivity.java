@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
         if(fragment == null) {
-            /* Write Here */
+            /* [期待結果] 起動時、fragmentが表示される */
             fragment = new MyFragment1();
         }
         button.setOnClickListener(getTextChangeClickListener());
@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public int getTextId(String text){
-        /* Write Here */
+        /* [期待結果] クリックされた時、テキストを入れ替える */
         Toast.makeText(MainActivity.this,"Let's implement getTextId()", Toast.LENGTH_LONG).show();
         return R.string.to_do_implement;
     }
@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /* Write here */
+                /* [期待結果] クリックされた時、fragmentを入れ替える */
                 Fragment fragment = new MyFragment1();
                 FragmentTransaction fragmentTransaction =
                         getSupportFragmentManager().beginTransaction();
