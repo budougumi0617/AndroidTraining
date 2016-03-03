@@ -68,7 +68,7 @@ public class MainActivityTest {
 
     @Test
     public void testGetTextId() throws Exception {
-        //Add perfomance to Mock resource
+        //Add performance to Mock resource
         when(mMockRes.getString(R.string.good_evening)).thenReturn("Good evening World!");
         assertThat(mActivity.getTextId("Good evening World!"),
                 is(R.string.hello_world));

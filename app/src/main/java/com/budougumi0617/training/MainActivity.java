@@ -12,7 +12,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     public Resources res;
@@ -33,8 +32,11 @@ public class MainActivity extends AppCompatActivity {
 
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
         if(fragment == null) {
-            /* [期待結果] 起動時、fragmentが表示される */
             fragment = new MyFragment1();
+            FragmentTransaction fragmentTransaction =
+                    getSupportFragmentManager().beginTransaction();
+            // TODO Add fragment to transaction, but Added result is not reflected to activity yet.
+            fragmentTransaction.add(R.id.fragment_container, fragment);
         }
         button.setOnClickListener(getTextChangeClickListener());
         fragment_button.setOnClickListener(getFragmentChangeClickListener());
@@ -71,28 +73,40 @@ public class MainActivity extends AppCompatActivity {
         };
     }
 
+    /**
+     * Change text by current text.
+     * @param text Current text in this activity.
+     * @return "Hello World!" or "Good evening World!"
+     */
     public int getTextId(String text){
-        /* [期待結果] クリックされた時、テキストを入れ替える */
-        Toast.makeText(MainActivity.this,"Let's implement getTextId()", Toast.LENGTH_LONG).show();
-        return R.string.to_do_implement;
+        // TODO You can use resources in src/main/res/values/strings.xml
+        return text.equals(res.getString(R.string.good_evening))?
+                R.string.to_do_implement : R.string.good_evening;
     }
 
     public View.OnClickListener getFragmentChangeClickListener(){
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /* [期待結果] クリックされた時、fragmentを入れ替える */
-                Fragment fragment = new MyFragment1();
-                FragmentTransaction fragmentTransaction =
-                        getSupportFragmentManager().beginTransaction();
-                Toast.makeText(MainActivity.this,
-                        "Let's implement getFragmentChangeClickListener()", Toast.LENGTH_LONG).show();
+                Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+                if(fragment != null) {
+                    fragment = changeFragment(fragment.getClass());
+                    FragmentTransaction fragmentTransaction =
+                            getSupportFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.fragment_container, fragment).commit();
+                }
             }
         };
     }
 
+    /**
+     *
+     * @param currentFragmentType class of fragment
+     * @return instance of MyFragment1 or MyFragment2
+     */
     public Fragment changeFragment(Class<? extends Fragment> currentFragmentType){
+        // TODO Return instance of correct fragment class
         return currentFragmentType == MyFragment2.class ?
-                new MyFragment1() : new MyFragment2();
+                new BlankFragment() : new BlankFragment();
     }
 }
