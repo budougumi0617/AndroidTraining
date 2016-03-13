@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public int getTextId(String text){
         // TODO You can use resources in src/main/res/values/strings.xml
-        return text.equals(res.getString(R.string.good_morning))?
+        return text.equals(res.getString(R.string.good_evening))?
                 R.string.to_do_implement : R.string.good_morning;
     }
 
