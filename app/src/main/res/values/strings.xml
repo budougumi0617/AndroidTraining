@@ -8,6 +8,7 @@
     <string name="my_fragment_pane">My fragment pane</string>
     <string name="hello_world">Hello World!</string>
     <string name="good_evening">Good evening World!</string>
+    <string name="good_morning">Good morning World!</string>
     <string name="to_do_implement">Incomplete implementation</string>
     <string name="dummy_fragment">Dummy fragment</string>
 </resources>
